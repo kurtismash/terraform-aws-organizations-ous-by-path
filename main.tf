@@ -12,13 +12,11 @@ data "aws_organizations_organizational_units" "level1" {
 
 locals {
   level1_ous = [
-    for ou in data.aws_organizations_organizational_units.level1.children : {
-      id        = ou.id
-      name      = ou.name
-      parent_id = local.root_id
+    for ou in data.aws_organizations_organizational_units.level1.children : merge(ou, {
       id_path   = "${local.org_id}/${local.root_id}/${ou.id}/"
       name_path = "${ou.name}"
-    }
+      parent_id = local.root_id
+    })
   ]
   level1_ou_map = { for ou in local.level1_ous : ou.id => ou }
 }
@@ -32,13 +30,11 @@ data "aws_organizations_organizational_units" "level2" {
 locals {
   level2_ous = flatten([
     for parent_id, ou_data in data.aws_organizations_organizational_units.level2 : [
-      for ou in ou_data.children : {
-        id        = ou.id
-        name      = ou.name
-        parent_id = parent_id
+      for ou in ou_data.children : merge(ou, {
         id_path   = "${local.level1_ou_map[parent_id].id_path}${ou.id}/"
         name_path = join(var.name_path_delimiter, [local.level1_ou_map[parent_id].name_path, ou.name])
-      }
+        parent_id = parent_id
+      })
     ]
   ])
   level2_ou_map = { for ou in local.level2_ous : ou.id => ou }
@@ -53,13 +49,11 @@ data "aws_organizations_organizational_units" "level3" {
 locals {
   level3_ous = flatten([
     for parent_id, ou_data in data.aws_organizations_organizational_units.level3 : [
-      for ou in ou_data.children : {
-        id        = ou.id
-        name      = ou.name
-        parent_id = parent_id
+      for ou in ou_data.children : merge(ou, {
         id_path   = "${local.level2_ou_map[parent_id].id_path}${ou.id}/"
         name_path = join(var.name_path_delimiter, [local.level2_ou_map[parent_id].name_path, ou.name])
-      }
+        parent_id = parent_id
+      })
     ]
   ])
   level3_ou_map = { for ou in local.level3_ous : ou.id => ou }
@@ -74,13 +68,11 @@ data "aws_organizations_organizational_units" "level4" {
 locals {
   level4_ous = flatten([
     for parent_id, ou_data in data.aws_organizations_organizational_units.level4 : [
-      for ou in ou_data.children : {
-        id        = ou.id
-        name      = ou.name
-        parent_id = parent_id
+      for ou in ou_data.children : merge(ou, {
         id_path   = "${local.level3_ou_map[parent_id].id_path}${ou.id}/"
         name_path = join(var.name_path_delimiter, [local.level3_ou_map[parent_id].name_path, ou.name])
-      }
+        parent_id = parent_id
+      })
     ]
   ])
   level4_ou_map = { for ou in local.level4_ous : ou.id => ou }
@@ -95,13 +87,11 @@ data "aws_organizations_organizational_units" "level5" {
 locals {
   level5_ous = flatten([
     for parent_id, ou_data in data.aws_organizations_organizational_units.level5 : [
-      for ou in ou_data.children : {
-        id        = ou.id
-        name      = ou.name
-        parent_id = parent_id
+      for ou in ou_data.children : merge(ou, {
         id_path   = "${local.level4_ou_map[parent_id].id_path}${ou.id}/"
         name_path = join(var.name_path_delimiter, [local.level4_ou_map[parent_id].name_path, ou.name])
-      }
+        parent_id = parent_id
+      })
     ]
   ])
 }

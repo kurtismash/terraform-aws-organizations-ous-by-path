@@ -6,6 +6,7 @@ Each OU is represented as a Map with attributes.
 
 | Name | Description | Example |
 |------|-------------|---------|
+| arn | The ARN of the OU. | `arn:aws:organizations::111111111111:ou/o-zyxsjdkdu5/ou-1abc-abcdefg` |
 | id | The id of the OU. | `ou-1abc-abcdefg` |
 |id_path | The path to the OU from the Organization ID, to be used with the `aws:PrincipalOrgPaths` and `aws:ResourceOrgPaths` conditions. | `o-zyxsjdkdu5/r-1abc/ou-1abc-bzfjwfg8/ou-1abc-abcdefg/` |
 | name | The name of the OU. | `Level 2 OU` |
