@@ -57,21 +57,6 @@ resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
 |------|---------|
 | <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 2.43.0 |
 
-## Modules
-
-No modules.
-
-## Resources
-
-| Name | Type |
-|------|------|
-| [aws_organizations_organization.org](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/organizations_organization) | data source |
-| [aws_organizations_organizational_units.level1](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/organizations_organizational_units) | data source |
-| [aws_organizations_organizational_units.level2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/organizations_organizational_units) | data source |
-| [aws_organizations_organizational_units.level3](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/organizations_organizational_units) | data source |
-| [aws_organizations_organizational_units.level4](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/organizations_organizational_units) | data source |
-| [aws_organizations_organizational_units.level5](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/organizations_organizational_units) | data source |
-
 ## Inputs
 
 | Name | Description | Type | Default | Required |
