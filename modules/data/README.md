@@ -31,7 +31,7 @@ Each OU is represented as a map with attributes
 ```hcl
 module "ous" {
   source = "kurtismash/organizations-ous-by-path/aws//modules/data"
-  # We recommend explicitly constraining the acceptable version numbers to avoid unexpected or unwanted changes.
+  # It's recommended to explicitly constrain the acceptable version numbers to avoid unexpected or unwanted changes.
 }
 
 # Create a bucket and allow access from accounts within a specified OU.

@@ -24,8 +24,8 @@ Each OU is represented as a map with attributes
   - `name` - Name of the account.
 - `id` - ID of the OU.
 - `name` - Name of the OU.
-- `org_path` - Path to the OU from the Organization ID, to be used with the `aws:PrincipalOrgPaths` and `aws:ResourceOrgPaths` IAM conditions.
 - `name_path` - Path to the OU using OU names, delimited by the `name_path_delimiter` variable.
+- `org_path` - Path to the OU from the Organization ID, to be used with the `aws:PrincipalOrgPaths` and `aws:ResourceOrgPaths` IAM conditions.
 - `parent_id` - ID of the OU's direct parent.
 
 ## Usage
@@ -35,20 +35,20 @@ Each OU is represented as a map with attributes
 ```hcl
 module "ous" {
   source = "kurtismash/organizations-ous-by-path/aws"
-  # We recommend explicitly constraining the acceptable version numbers to avoid unexpected or unwanted changes.
+  # It's recommended to explicitly constrain the acceptable version numbers to avoid unexpected or unwanted changes.
 
   organization_structure = {
-    "Level 1 OU" : {
-      "Level 2 OU" : {
-        "Level 3 OU" : {
-          "Level 4 OU" : {
-            "Level 5 OU" : {},
-            "Level 5 OU-2" : {}
+    "Level 1 OU" = {
+      "Level 2 OU" = {
+        "Level 3 OU" = {
+          "Level 4 OU" = {
+            "Level 5 OU"   = {},
+            "Level 5 OU-2" = {}
           }
         }
       }
     },
-    "Level 1 OU-2": {}
+    "Level 1 OU-2" = {}
   }
 }
 
