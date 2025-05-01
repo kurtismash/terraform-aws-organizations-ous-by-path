@@ -23,8 +23,8 @@ Each OU is represented as a map with attributes
   - `id` - Identifier of the account.
   - `name` - Name of the account.
 - `id` - ID of the OU.
-- `id_path` - Path to the OU from the Organization ID, to be used with the `aws:PrincipalOrgPaths` and `aws:ResourceOrgPaths` IAM conditions.
 - `name` - Name of the OU.
+- `org_path` - Path to the OU from the Organization ID, to be used with the `aws:PrincipalOrgPaths` and `aws:ResourceOrgPaths` IAM conditions.
 - `name_path` - Path to the OU using OU names, delimited by the `name_path_delimiter` variable.
 - `parent_id` - ID of the OU's direct parent.
 
@@ -95,7 +95,7 @@ data "aws_iam_policy_document" "bucket_policy" {
     condition {
       test     = "ForAllValues:StringEquals"
       variable = "aws:PrincipalOrgPaths"
-      values   = [module.ous.by_name_path["Level 1 OU/Level 2 OU"].id_path]
+      values   = [module.ous.by_name_path["Level 1 OU/Level 2 OU"].org_path]
     }
   }
 }
@@ -146,5 +146,5 @@ No resources.
 |------|-------------|
 | <a name="output_by_id"></a> [by\_id](#output\_by\_id) | Map of OUs indexed by id. |
 | <a name="output_by_name_path"></a> [by\_name\_path](#output\_by\_name\_path) | Map of OUs indexed by name\_path. |
-| <a name="output_list"></a> [list](#output\_list) | List of OUs with added attributes id\_path and name\_path. |
+| <a name="output_list"></a> [list](#output\_list) | List of OUs with added attributes name\_path and org\_path. |
 <!-- END_TF_DOCS -->
