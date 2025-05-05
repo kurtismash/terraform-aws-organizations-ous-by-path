@@ -74,7 +74,7 @@ resource "aws_organizations_policy_attachment" "scp" {
 ```hcl
 module "ous" {
   source = "kurtismash/organizations-ous-by-path/aws"
-  # We recommend explicitly constraining the acceptable version numbers to avoid unexpected or unwanted changes.
+  # It's recommended to explicitly constrain the acceptable version numbers to avoid unexpected or unwanted changes.
 }
 
 # Create a bucket and allow access from accounts within a specified OU.

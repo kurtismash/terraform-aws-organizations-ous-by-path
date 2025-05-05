@@ -1,14 +1,14 @@
 data "aws_organizations_organization" "org" {}
 
 locals {
-  # Hardcode a delimiter to use internally for the name path, this allows the module caller to change the delimiter variable without destroying everything.
+  # Hardcode a delimiter to use internally for the name path, this allows the module caller to change var.name_path_delimiter without destroying everything.
   internal_name_path_delimiter = ":::"
 
   org_id          = data.aws_organizations_organization.org.id
   root_id         = data.aws_organizations_organization.org.roots[0].id
   org_path_prefix = "${local.org_id}/${local.root_id}/"
 
-  # Convert the nested map structure into a flat list of name paths - "Level 1/Level 2/Level 3/Level 4/Level 5"
+  # Convert the nested map structure into a flat list of name paths - "Level 1:::Level 2:::Level 3:::Level 4:::Level 5"
   # Terraform can't do recursion, so we have to do this manually.
   ou_list = flatten([
     for l1_k, l1_v in var.organization_structure : [
