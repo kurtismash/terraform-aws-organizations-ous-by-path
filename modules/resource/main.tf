@@ -94,10 +94,10 @@ locals {
     module.l5.map
   )
 
-  output_map = { for name_path, ou in local.all_ous_internal : replace(ou.name_path, local.internal_name_path_delimiter, var.name_path_delimiter) => merge(
-    ou,
-    { name_path = replace(ou.name_path, local.internal_name_path_delimiter, var.name_path_delimiter) },
-    !var.include_descendant_accounts ? {} : { descendant_accounts = flatten([for i in local.all_ous_internal : i.child_accounts if strcontains(i.org_path, ou.id)]) }
+  output_map = { for ou_name_path in local.ou_list : replace(ou_name_path, local.internal_name_path_delimiter, var.name_path_delimiter) => merge(
+    local.all_ous_internal[ou_name_path],
+    { name_path = replace(ou_name_path, local.internal_name_path_delimiter, var.name_path_delimiter) },
+    !var.include_descendant_accounts ? {} : { descendant_accounts = flatten([for i in local.all_ous_internal : i.child_accounts if strcontains(i.org_path, local.all_ous_internal[ou_name_path].id)]) }
     )
   }
 }
